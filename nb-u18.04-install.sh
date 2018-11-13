@@ -15,10 +15,12 @@ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/
 sudo apt-get update
 sudo apt-get install -y mongodb-org
 sudo systemctl start mongod
-# Create administrative user
-echo "Creating user: \"$DBUSER\"..."
+echo "Creating Admin for MongoDB................."
+sleep 2;
 PASS1=`pwgen -s 14 1`
 mongo admin --eval "db.createUser( { user: 'admin', pwd: '$PASS1', roles: [ { role: 'readWriteAnyDatabase', db: 'admin' }, { role: 'userAdminAnyDatabase', db: 'admin' } ] } );"
+echo "Creating user: \"$DBUSER\"..."
+sleep 2;
 PASS2=`pwgen -s 14 1`
 mongo $DBUSER --eval "db.createUser( { user: '$DBUSER', pwd: '$PASS2', roles: [ { role: 'readWrite', db: '$DBUSER' }, { role: 'clusterMonitor', db: 'admin' } ] } );"
 quit()
