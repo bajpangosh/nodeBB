@@ -23,7 +23,7 @@ sudo wget -O "$DOMAIN" https://goo.gl/XYY7Hb
 sudo sed -i -e "s/example.com/$DOMAIN/" "$DOMAIN"
 sudo sed -i -e "s/www.example.com/www.$DOMAIN/" "$DOMAIN"
 sudo ln -s /etc/nginx/sites-available/"$DOMAIN" /etc/nginx/sites-enabled/
-
+sudo mkdir /etc/nginx/ssl
 echo "Installing Let's Encrypt SSL"
 sudo add-apt-repository ppa:certbot/certbot
 sudo apt-get update
