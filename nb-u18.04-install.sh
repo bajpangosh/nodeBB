@@ -23,13 +23,14 @@ echo "Creating user: \"$DBUSER\"..."
 sleep 2;
 PASS2=`pwgen -s 14 1`
 mongo $DBUSER --eval "db.createUser( { user: '$DBUSER', pwd: '$PASS2', roles: [ { role: 'readWrite', db: '$DBUSER' }, { role: 'clusterMonitor', db: 'admin' } ] } );"
-quit()
-sudo systemctl restart mongod
+echo "MongoDB Successfully created..............."
+sleep 2;
 echo "========================================================================"
 echo "MongoDB User: \"$DBUSER\""
 echo "MongoDB Password: \"$PASS2\""
 echo "MongoDB Database: \"$DBUSER\""
 echo "========================================================================"
+sudo systemctl restart mongod
 git clone -b v1.10.x https://github.com/NodeBB/NodeBB.git nodebb
 cd nodebb
 ./nodebb setup
