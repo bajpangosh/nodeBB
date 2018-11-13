@@ -16,13 +16,18 @@ sudo apt-get update
 sudo apt-get install -y mongodb-org
 sudo systemctl start mongod
 # Create administrative user
-echo "Creating user: \"$USERNAME\"..."
+echo "Creating user: \"$DBUSER\"..."
 PASS1=`pwgen -s -1 16`
 mongo admin --eval "db.createUser( { user: "admin", pwd: "$PASS1", roles: [ { role: "readWriteAnyDatabase", db: "admin" }, { role: "userAdminAnyDatabase", db: "admin" } ] } );"
 PASS2=`pwgen -s -1 16`
 mongo $DBUSER --eval "db.createUser( { user: "$DBUSER", pwd: "$PASS2", roles: [ { role: "readWrite", db: "$DBUSER" }, { role: "clusterMonitor", db: "admin" } ] } );"
 quit()
 sudo systemctl restart mongod
+echo "========================================================================"
+echo "MongoDB User: \"$DBUSER\""
+echo "MongoDB Password: \"$PASS2\""
+echo "MongoDB Database: \"$DBUSER\""
+echo "========================================================================"
 git clone -b v1.10.x https://github.com/NodeBB/NodeBB.git nodebb
 cd nodebb
 ./nodebb setup
