@@ -2,12 +2,17 @@
 # GET ALL USER INPUT
 echo "Domain Name (eg. example.com)?"
 read DOMAIN
+echo "Email id (eg. valid email id for Let's Encrypt)?"
+read EMAIL
 echo "Username (eg. database name)?"
 read DBUSER
 echo "Updating OS................."
 sleep 2;
 sudo apt-get update
-sudo apt-get install nginx git zip unzip pwgen -y
+sudo apt-get install nginx git zip unzip pwgen software-properties-common -y
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install python-certbot-nginx -y
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
@@ -22,11 +27,9 @@ sudo sed -i -e "s/example.com/$DOMAIN/" "$DOMAIN"
 sudo sed -i -e "s/www.example.com/www.$DOMAIN/" "$DOMAIN"
 sudo ln -s /etc/nginx/sites-available/"$DOMAIN" /etc/nginx/sites-enabled/
 
-echo "Setting up Cloudflare FULL SSL"
+echo "Setting up Let's Encrypt SSL"
 sleep 2;
-sudo mkdir /etc/nginx/ssl
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
-sudo openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+sudo certbot --nginx -m "$EMAIL" -d "$DOMAIN" -d www."$DOMAIN"
 cd /etc/nginx/
 sudo mv nginx.conf nginx.conf.backup
 sudo wget -O nginx.conf https://goo.gl/7UBeQS
