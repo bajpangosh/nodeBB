@@ -13,6 +13,25 @@ sudo apt-get install -y nodejs
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
 echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
 sudo apt-get update
+
+echo "Sit back and relax :) ......"
+sleep 2;
+cd /etc/nginx/sites-available/
+sudo wget -O "$DOMAIN" https://goo.gl/XYY7Hb
+sudo sed -i -e "s/example.com/$DOMAIN/" "$DOMAIN"
+sudo sed -i -e "s/www.example.com/www.$DOMAIN/" "$DOMAIN"
+sudo ln -s /etc/nginx/sites-available/"$DOMAIN" /etc/nginx/sites-enabled/
+
+echo "Setting up Cloudflare FULL SSL"
+sleep 2;
+sudo mkdir /etc/nginx/ssl
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
+sudo openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+cd /etc/nginx/
+sudo mv nginx.conf nginx.conf.backup
+sudo wget -O nginx.conf https://goo.gl/7UBeQS
+sudo mkdir /var/www/"$DOMAIN"
+cd /var/www/"$DOMAIN"
 sudo apt-get install -y mongodb-org
 sudo systemctl start mongod
 echo "Creating Admin for MongoDB................."
