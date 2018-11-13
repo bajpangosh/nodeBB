@@ -10,9 +10,6 @@ echo "Updating OS................."
 sleep 2;
 sudo apt-get update
 sudo apt-get install nginx git zip unzip pwgen software-properties-common -y
-sudo add-apt-repository ppa:certbot/certbot
-sudo apt-get update
-sudo apt-get install python-certbot-nginx -y
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
@@ -26,6 +23,11 @@ sudo wget -O "$DOMAIN" https://goo.gl/XYY7Hb
 sudo sed -i -e "s/example.com/$DOMAIN/" "$DOMAIN"
 sudo sed -i -e "s/www.example.com/www.$DOMAIN/" "$DOMAIN"
 sudo ln -s /etc/nginx/sites-available/"$DOMAIN" /etc/nginx/sites-enabled/
+
+echo "Installing Let's Encrypt SSL"
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install python-certbot-nginx -y
 
 echo "Setting up Let's Encrypt SSL"
 sleep 2;
