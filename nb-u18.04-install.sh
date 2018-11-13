@@ -19,7 +19,7 @@ sudo systemctl start mongod
 echo "Creating user: \"$DBUSER\"..."
 PASS1=`pwgen -s 14 1`
 mongo admin --eval "db.createUser( { user: 'admin', pwd: '$PASS1', roles: [ { role: 'readWriteAnyDatabase', db: 'admin' }, { role: 'userAdminAnyDatabase', db: 'admin' } ] } );"
-PASS1=`pwgen -s 14 1`
+PASS2=`pwgen -s 14 1`
 mongo $DBUSER --eval "db.createUser( { user: '$DBUSER', pwd: '$PASS2', roles: [ { role: 'readWrite', db: '$DBUSER' }, { role: 'clusterMonitor', db: 'admin' } ] } );"
 quit()
 sudo systemctl restart mongod
