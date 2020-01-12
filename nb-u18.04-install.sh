@@ -7,7 +7,7 @@ read DBUSER
 echo "Updating OS................."
 sleep 2;
 sudo apt-get update
-sudo apt-get install nginx git zip unzip pwgen -y
+sudo apt-get install nginx git zip unzip npm pwgen -y
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
