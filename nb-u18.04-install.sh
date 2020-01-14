@@ -8,7 +8,7 @@ echo "Updating OS................."
 sleep 2;
 sudo apt-get update
 sudo apt-get install nginx git zip unzip npm pwgen -y
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
 echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
@@ -51,7 +51,8 @@ echo "MongoDB Password: \"$PASS2\""
 echo "MongoDB Database: \"$DBUSER\""
 echo "========================================================================"
 sudo systemctl restart mongod
-git clone -b v1.10.x https://github.com/NodeBB/NodeBB.git nodebb
-cd nodebb
+cd /var/www/"$DOMAIN"
+git clone -b v1.13.x https://github.com/NodeBB/NodeBB.git nodebb
+cd /var/www/"$DOMAIN"
 ./nodebb setup
 ./nodebb start
