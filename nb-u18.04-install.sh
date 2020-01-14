@@ -53,6 +53,6 @@ echo "========================================================================"
 sudo systemctl restart mongod
 cd /var/www/"$DOMAIN"
 git clone -b v1.13.x https://github.com/NodeBB/NodeBB.git nodebb
-cd /var/www/"$DOMAIN"
+cd /var/www/"$DOMAIN"/nodebb
 ./nodebb setup
 ./nodebb start
